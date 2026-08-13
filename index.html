@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111827" />
+  <title>Big Hit Society | Trainer Adventure</title>
+
+  <style>
+    :root{
+      --bg:#0f172a;
+      --panel:#ffffff;
+      --ink:#111827;
+      --muted:#6b7280;
+      --yellow:#facc15;
+      --blue:#2563eb;
+      --green:#10b981;
+      --red:#ef4444;
+      --purple:#7c3aed;
+      --orange:#f97316;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(37,99,235,.28), transparent 30%),
+        radial-gradient(circle at 85% 15%, rgba(124,58,237,.24), transparent 28%),
+        linear-gradient(160deg,#0f172a,#1f2937);
+      color:white;
+      padding:18px;
+    }
+
+    .app{
+      width:min(980px,100%);
+      margin:0 auto;
+    }
+
+    .brand{
+      text-align:center;
+      font-weight:1000;
+      letter-spacing:.17em;
+      font-size:.8rem;
+      color:var(--yellow);
+      margin-bottom:8px;
+    }
+
+    .hero{
+      background:linear-gradient(135deg,#111827,#1e293b);
+      border:2px solid rgba(255,255,255,.08);
+      border-radius:28px;
+      padding:22px;
+      box-shadow:0 24px 70px rgba(0,0,0,.35);
+      margin-bottom:16px;
+    }
+
+    .heroTop{
+      display:flex;
+      gap:16px;
+      justify-content:space-between;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
+
+    h1{
+      margin:0;
+      font-size:clamp(2rem,7vw,3.4rem);
+      line-height:.95;
+    }
+
+    .subtitle{
+      color:#cbd5e1;
+      margin:10px 0 0;
+      max-width:620px;
+    }
+
+    .trainerBadge{
+      min-width:220px;
+      background:#fff;
+      color:var(--ink);
+      border-radius:18px;
+      padding:14px;
+      box-shadow:0 12px 26px rgba(0,0,0,.18);
+    }
+
+    .trainerBadge .label{
+      font-size:.72rem;
+      color:var(--muted);
+      font-weight:1000;
+      letter-spacing:.08em;
+    }
+
+    .trainerBadge .big{
+      font-size:1.45rem;
+      font-weight:1000;
+      margin-top:2px;
+    }
+
+    .xpbar{
+      margin-top:10px;
+      height:10px;
+      background:#e5e7eb;
+      border-radius:999px;
+      overflow:hidden;
+    }
+
+    .xpfill{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,#2563eb,#7c3aed);
+      transition:width .35s ease;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin-top:16px;
+    }
+
+    .stat{
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      padding:12px;
+      text-align:center;
+    }
+
+    .stat .num{
+      font-size:1.45rem;
+      font-weight:1000;
+    }
+
+    .stat .txt{
+      font-size:.75rem;
+      color:#cbd5e1;
+      font-weight:800;
+      margin-top:2px;
+    }
+
+    .panel{
+      background:var(--panel);
+      color:var(--ink);
+      border-radius:24px;
+      padding:18px;
+      box-shadow:0 18px 50px rgba(0,0,0,.24);
+      margin-bottom:16px;
+    }
+
+    .panel h2{
+      margin:0 0 6px;
+      font-size:1.5rem;
+    }
+
+    .panel p{
+      margin:0 0 14px;
+      color:var(--muted);
+    }
+
+    .areas{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+    }
+
+    .area{
+      border:0;
+      border-radius:20px;
+      padding:16px;
+      min-height:150px;
+      cursor:pointer;
+      text-align:left;
+      font:inherit;
+      position:relative;
+      overflow:hidden;
+      color:#111827;
+      box-shadow:0 10px 22px rgba(0,0,0,.12);
+      transition:transform .12s ease;
+    }
+
+    .area:active{transform:scale(.98)}
+
+    .area .emoji{
+      font-size:2.2rem;
+      display:block;
+      margin-bottom:18px;
+    }
+
+    .area .name{
+      font-size:1.15rem;
+      font-weight:1000;
+    }
+
+    .area .desc{
+      font-size:.78rem;
+      color:#374151;
+      margin-top:4px;
+      max-width:90%;
+    }
+
+    .area .badgeStatus{
+      position:absolute;
+      top:10px;
+      right:10px;
+      background:#111827;
+      color:#fff;
+      border-radius:999px;
+      font-size:.68rem;
+      font-weight:1000;
+      padding:5px 8px;
+    }
+
+    .forest{background:linear-gradient(145deg,#bbf7d0,#4ade80)}
+    .ocean{background:linear-gradient(145deg,#bfdbfe,#38bdf8)}
+    .volcano{background:linear-gradient(145deg,#fed7aa,#fb7185)}
+    .haunted{background:linear-gradient(145deg,#ddd6fe,#a78bfa)}
+    .power{background:linear-gradient(145deg,#fef08a,#fde047)}
+    .dragon{background:linear-gradient(145deg,#fecdd3,#c084fc)}
+
+    .encounter{
+      display:none;
+    }
+
+    .encounterCard{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:18px;
+      align-items:center;
+    }
+
+    .scene{
+      min-height:420px;
+      border-radius:22px;
+      display:grid;
+      place-items:center;
+      position:relative;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 50% 75%, rgba(255,255,255,.75) 0 10%, transparent 11%),
+        linear-gradient(#93c5fd 0 55%, #86efac 55%);
+      border:4px solid #2563eb;
+    }
+
+    .scene::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle, rgba(255,255,255,.65) 0 1px, transparent 1.6px);
+      background-size:30px 30px;
+      opacity:.35;
+      pointer-events:none;
+    }
+
+    .encounterTag{
+      position:absolute;
+      top:12px;
+      left:12px;
+      padding:7px 10px;
+      background:#111827;
+      color:#fff;
+      border-radius:999px;
+      font-size:.72rem;
+      font-weight:1000;
+      z-index:3;
+    }
+
+    #pokemonImage{
+      width:min(290px,75vw);
+      height:290px;
+      object-fit:contain;
+      filter:drop-shadow(0 14px 10px rgba(0,0,0,.22));
+      z-index:2;
+    }
+
+    .info h3{
+      margin:0;
+      font-size:2rem;
+      text-transform:capitalize;
+    }
+
+    .rarity{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#111827;
+      color:#fff;
+      font-size:.72rem;
+      font-weight:1000;
+      letter-spacing:.06em;
+      margin:8px 0 12px;
+    }
+
+    .typeRow{
+      display:flex;
+      gap:7px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+
+    .type{
+      padding:5px 9px;
+      border-radius:999px;
+      background:#e5e7eb;
+      font-size:.72rem;
+      font-weight:1000;
+      text-transform:uppercase;
+    }
+
+    .buttons{
+      display:grid;
+      gap:10px;
+      margin-top:14px;
+    }
+
+    button.action{
+      width:100%;
+      border:0;
+      border-radius:15px;
+      padding:14px 15px;
+      font-size:1rem;
+      font-weight:1000;
+      cursor:pointer;
+    }
+
+    #catchBtn{background:var(--yellow);color:#111827}
+    #runBtn{background:#e5e7eb;color:#111827}
+    #exploreAgainBtn{background:#111827;color:white;display:none}
+    #backBtn{background:#2563eb;color:white;display:none}
+
+    .message{
+      min-height:50px;
+      margin-top:10px;
+      padding:10px;
+      border-radius:12px;
+      background:#f3f4f6;
+      color:#374151;
+      font-weight:800;
+      line-height:1.35;
+    }
+
+    .badges{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:10px;
+    }
+
+    .badgeCard{
+      border:2px solid #e5e7eb;
+      border-radius:16px;
+      padding:12px 8px;
+      text-align:center;
+      background:#f9fafb;
+    }
+
+    .badgeIcon{
+      font-size:1.7rem;
+      opacity:.3;
+    }
+
+    .badgeCard.earned{
+      border-color:#facc15;
+      background:#fffbeb;
+    }
+
+    .badgeCard.earned .badgeIcon{
+      opacity:1;
+    }
+
+    .badgeName{
+      font-size:.72rem;
+      font-weight:1000;
+      margin-top:4px;
+    }
+
+    .dexGrid{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:8px;
+      max-height:360px;
+      overflow:auto;
+      padding-right:4px;
+    }
+
+    .dexEntry{
+      border:1px solid #e5e7eb;
+      border-radius:12px;
+      padding:8px;
+      text-align:center;
+      background:#f9fafb;
+      min-height:86px;
+    }
+
+    .dexEntry img{
+      width:52px;
+      height:52px;
+      object-fit:contain;
+      opacity:.95;
+    }
+
+    .dexEntry .nm{
+      font-size:.68rem;
+      font-weight:1000;
+      text-transform:capitalize;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .emptyDex{
+      color:var(--muted);
+      padding:10px 0 2px;
+    }
+
+    .utility{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .utility button{
+      border:0;
+      border-radius:12px;
+      padding:10px 12px;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    .reset{background:#fee2e2;color:#991b1b}
+    .sound{background:#e5e7eb;color:#111827}
+
+    .footer{
+      text-align:center;
+      color:#cbd5e1;
+      font-size:.75rem;
+      line-height:1.4;
+      padding:4px 10px 14px;
+    }
+
+    .burst{
+      position:fixed;
+      inset:0;
+      display:none;
+      place-items:center;
+      z-index:100;
+      pointer-events:none;
+      font-size:4rem;
+      animation:burst .8s ease;
+    }
+
+    @keyframes burst{
+      0%{transform:scale(.3);opacity:0}
+      45%{transform:scale(1.35);opacity:1}
+      100%{transform:scale(1);opacity:0}
+    }
+
+    .loading{
+      position:absolute;
+      inset:0;
+      display:none;
+      place-items:center;
+      background:rgba(255,255,255,.85);
+      color:#111827;
+      font-weight:1000;
+      z-index:20;
+    }
+
+
+    .accountPanel{
+      background:linear-gradient(135deg,#ffffff,#f8fafc);
+      color:#111827;
+      border-radius:22px;
+      padding:16px;
+      margin-bottom:16px;
+      box-shadow:0 14px 34px rgba(0,0,0,.18);
+    }
+
+    .accountTop{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .accountTitle{
+      font-weight:1000;
+      font-size:1.15rem;
+    }
+
+    .accountStatus{
+      color:#6b7280;
+      font-size:.82rem;
+      font-weight:800;
+      margin-top:3px;
+    }
+
+    .authGrid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .authGrid input{
+      width:100%;
+      border:2px solid #e5e7eb;
+      border-radius:12px;
+      padding:12px;
+      font-size:.95rem;
+      outline:none;
+    }
+
+    .authGrid input:focus{
+      border-color:#2563eb;
+    }
+
+    .authButtons{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:8px;
+      margin-top:10px;
+    }
+
+    .authButtons button{
+      border:0;
+      border-radius:12px;
+      padding:11px 10px;
+      font-weight:1000;
+      cursor:pointer;
+    }
+
+    .googleBtn{background:#2563eb;color:white}
+    .emailBtn{background:#111827;color:white}
+    .createBtn{background:#facc15;color:#111827}
+    .signOutBtn{
+      border:0;
+      border-radius:12px;
+      padding:10px 12px;
+      font-weight:1000;
+      cursor:pointer;
+      background:#fee2e2;
+      color:#991b1b;
+      display:none;
+    }
+
+    .syncPill{
+      display:inline-block;
+      margin-top:8px;
+      padding:5px 8px;
+      border-radius:999px;
+      background:#e5e7eb;
+      color:#374151;
+      font-size:.7rem;
+      font-weight:1000;
+    }
+
+    @media (max-width:760px){
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .authGrid{grid-template-columns:1fr}
+      .authButtons{grid-template-columns:1fr}
+      .areas{grid-template-columns:repeat(2,1fr)}
+      .encounterCard{grid-template-columns:1fr}
+      .badges{grid-template-columns:repeat(3,1fr)}
+      .dexGrid{grid-template-columns:repeat(3,1fr)}
+      .scene{min-height:350px}
+    }
+  </style>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
+</head>
+<body>
+  <div class="app">
+    <div class="brand">BIG HIT SOCIETY</div>
+
+    <section class="hero">
+      <div class="heroTop">
+        <div>
+          <h1>TRAINER ADVENTURE</h1>
+          <p class="subtitle">
+            Explore six locations, manage your Poké Ball inventory, complete badge challenges, and work toward all 1,025 Pokémon. Sign in to carry your adventure across devices.
+          </p>
+        </div>
+
+        <div class="trainerBadge">
+          <div class="label">TRAINER LEVEL</div>
+          <div class="big" id="levelText">Level 1</div>
+          <div class="xpbar"><div class="xpfill" id="xpFill"></div></div>
+          <div style="margin-top:6px;font-size:.74rem;color:#6b7280;font-weight:800" id="xpText">0 / 100 XP</div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="num" id="caughtCount">0</div>
+          <div class="txt">POKÉMON CAUGHT</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="dexCount">0/1025</div>
+          <div class="txt">POKÉDEX</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="badgeCount">0/6</div>
+          <div class="txt">BADGES</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="shinyCount">0</div>
+          <div class="txt">SHINIES</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="ballCount">50</div>
+          <div class="txt">🔴 POKÉ BALLS</div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="accountPanel">
+      <div class="accountTop">
+        <div>
+          <div class="accountTitle">☁️ Trainer Account</div>
+          <div class="accountStatus" id="accountStatus">Not signed in. Progress is currently saved only on this device.</div>
+          <div class="syncPill" id="syncStatus">LOCAL SAVE</div>
+        </div>
+        <button class="signOutBtn" id="signOutBtn">SIGN OUT</button>
+      </div>
+
+      <div id="signedOutControls">
+        <div class="authGrid">
+          <input type="email" id="authEmail" placeholder="Email address" autocomplete="email">
+          <input type="password" id="authPassword" placeholder="Password" autocomplete="current-password">
+        </div>
+
+        <div class="authButtons">
+          <button class="googleBtn" id="googleSignInBtn">G CONTINUE WITH GOOGLE</button>
+          <button class="emailBtn" id="emailSignInBtn">EMAIL SIGN IN</button>
+          <button class="createBtn" id="createAccountBtn">CREATE ACCOUNT</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="mapPanel">
+      <h2>Choose Your Destination</h2>
+      <p>Each area has themed encounters, plus surprise World Encounters that can bring in any of the 1,025 Pokémon. Physical NFC prints can link directly to any area.</p>
+
+      <div class="areas">
+        <button class="area forest" data-area="forest">
+          <span class="badgeStatus" id="badge-forest">NO BADGE</span>
+          <span class="emoji">🌳</span>
+          <div class="name">Forest</div>
+          <div class="desc">Grass, Bug, and woodland encounters.</div>
+        </button>
+
+        <button class="area ocean" data-area="ocean">
+          <span class="badgeStatus" id="badge-ocean">NO BADGE</span>
+          <span class="emoji">🌊</span>
+          <div class="name">Ocean</div>
+          <div class="desc">Water and coastal encounters.</div>
+        </button>
+
+        <button class="area volcano" data-area="volcano">
+          <span class="badgeStatus" id="badge-volcano">NO BADGE</span>
+          <span class="emoji">🌋</span>
+          <div class="name">Volcano</div>
+          <div class="desc">Fire, Rock, and heat-loving encounters.</div>
+        </button>
+
+        <button class="area haunted" data-area="haunted">
+          <span class="badgeStatus" id="badge-haunted">NO BADGE</span>
+          <span class="emoji">👻</span>
+          <div class="name">Haunted House</div>
+          <div class="desc">Ghost, Dark, and eerie encounters.</div>
+        </button>
+
+        <button class="area power" data-area="power">
+          <span class="badgeStatus" id="badge-power">NO BADGE</span>
+          <span class="emoji">⚡</span>
+          <div class="name">Power Plant</div>
+          <div class="desc">Electric and mechanical encounters.</div>
+        </button>
+
+        <button class="area dragon" data-area="dragon">
+          <span class="badgeStatus" id="badge-dragon">NO BADGE</span>
+          <span class="emoji">🐉</span>
+          <div class="name">Dragon Cave</div>
+          <div class="desc">Dragon and rare cave encounters.</div>
+        </button>
+      </div>
+    </section>
+
+    <section class="panel encounter" id="encounterPanel">
+      <h2 id="areaTitle">Wild Encounter</h2>
+      <p id="areaSubtitle">Something is moving nearby...</p>
+
+      <div class="encounterCard">
+        <div class="scene" id="scene">
+          <div class="encounterTag" id="encounterTag">WILD ENCOUNTER</div>
+          <img id="pokemonImage" alt="Wild Pokémon" />
+          <div class="loading" id="loading">SEARCHING AREA…</div>
+        </div>
+
+        <div class="info">
+          <h3 id="pokemonName">Unknown</h3>
+          <div class="rarity" id="rarity">COMMON</div>
+          <div class="typeRow" id="types"></div>
+
+          <div class="message" id="message">
+            A wild Pokémon appeared. Try to catch it!
+          </div>
+
+          <div class="buttons">
+            <button class="action" id="catchBtn">🔴 THROW BALL</button>
+            <button class="action" id="runBtn">🏃 RUN AWAY</button>
+            <button class="action" id="exploreAgainBtn">🔎 EXPLORE AGAIN</button>
+            <button class="action" id="backBtn">🗺️ BACK TO MAP</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Badges</h2>
+      <p>Each badge has its own challenge: Forest 5, Ocean 10, Volcano 15, Haunted House 20, Power Plant 25, and Dragon Cave 30 catches.</p>
+      <div class="badges" id="badgeGrid"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Your Pokédex</h2>
+      <p>Every unique Pokémon you catch is saved here. Your goal is all 1,025 Pokémon.</p>
+      <div class="dexGrid" id="dexGrid"></div>
+    </section>
+
+
+    <section class="panel" id="guessPanel">
+      <h2>👤 Guess That Pokémon</h2>
+      <p>Guess correctly to earn <strong>+5 Poké Balls</strong>. You can earn up to <strong>150 Poké Balls per day</strong> here.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center">
+        <div style="min-height:260px;border-radius:20px;background:linear-gradient(#bfdbfe,#86efac);display:grid;place-items:center;position:relative;overflow:hidden">
+          <img id="guessImage" alt="Mystery Pokémon" style="width:220px;height:220px;object-fit:contain;filter:brightness(0);">
+          <div id="guessLoading" style="position:absolute;inset:0;display:none;place-items:center;background:rgba(255,255,255,.85);font-weight:1000">LOADING CHALLENGE…</div>
+        </div>
+
+        <div>
+          <div id="guessStatus" class="message">Press START CHALLENGE to begin.</div>
+          <div id="guessChoices" class="buttons"></div>
+          <div class="buttons">
+            <button class="action" id="startGuessBtn" style="background:#7c3aed;color:white">🧠 START CHALLENGE</button>
+          </div>
+          <div style="margin-top:10px;font-size:.78rem;color:#6b7280;font-weight:800" id="dailyGuessText">Today's trivia rewards: 0/150 Poké Balls</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Game Controls</h2>
+      <div class="utility">
+        <button class="sound" id="soundBtn">🔊 Sound: ON</button>
+        <button class="reset" id="resetBtn">🗑️ Reset Adventure</button>
+      </div>
+    </section>
+
+    <div class="footer">
+      Fan-made Big Hit Society experience. Pokémon names and artwork belong to their respective rights holders.
+    </div>
+  </div>
+
+  <div class="burst" id="burst">✨⚡✨</div>
+
+<script>
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBbuPXlHhepPNJ0Dv0cAFaJEErM1j_nY2Y",
+    authDomain: "bhs-trainer-adventure.firebaseapp.com",
+    projectId: "bhs-trainer-adventure",
+    storageBucket: "bhs-trainer-adventure.firebasestorage.app",
+    messagingSenderId: "474818897040",
+    appId: "1:474818897040:web:f12834208a8bea881ae415"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  let signedInUser = null;
+  let cloudSaveTimer = null;
+  let authResolved = false;
+
+  const SAVE_KEY = "bhs_trainer_adventure_v1";
+
+  const areaData = {
+    forest: {
+      title:"🌳 Forest",
+      subtitle:"Leaves rustle around you. A wild Pokémon is nearby.",
+      ids:[1,2,3,10,11,12,13,14,15,16,17,18,43,44,45,46,47,48,49,69,70,71,102,103,123,127,152,153,154,165,166,167,168,187,188,189,191,192,204,205,214,251,252,253,254,265,266,267,268,269,273,274,275,285,286,315,357,406,407,412,413,414,420,421,455,540,541,542,548,549,556,590,591,650,651,652,664,665,666,708,709,722,723,724,753,754,761,762,763,810,811,812],
+      badge:"Forest Badge",
+      badgeGoal:5,
+      icon:"🌿"
+    },
+    ocean: {
+      title:"🌊 Ocean",
+      subtitle:"Waves crash nearby. Something splashes in the water.",
+      ids:[7,8,9,54,55,60,61,62,72,73,79,80,86,87,90,91,98,99,116,117,118,119,120,121,129,130,131,134,138,139,140,141,158,159,160,170,171,183,184,194,195,211,222,223,224,226,230,245,258,259,260,270,271,272,278,279,283,284,318,319,320,321,339,340,341,342,349,350,366,367,368,393,394,395,418,419,422,423,456,457,458,484,489,490,501,502,503,515,516,535,536,537,550,564,565,580,581,592,593,594,656,657,658,688,689,690,691,692,693,728,729,730,746,747,748,751,752,771,779,816,817,818],
+      badge:"Ocean Badge",
+      badgeGoal:10,
+      icon:"💧"
+    },
+    volcano: {
+      title:"🌋 Volcano",
+      subtitle:"Heat rises from the ground. A fiery encounter begins.",
+      ids:[4,5,6,37,38,58,59,74,75,76,77,78,95,111,112,126,136,146,155,156,157,218,219,228,229,240,244,246,247,248,255,256,257,299,304,305,306,322,323,324,328,329,330,338,383,390,391,392,410,411,438,467,485,498,499,500,513,514,524,525,526,554,555,607,608,609,631,636,637,643,653,654,655,662,663,667,668,757,758,776,806,813,814,815,837,838,839],
+      badge:"Volcano Badge",
+      badgeGoal:15,
+      icon:"🔥"
+    },
+    haunted: {
+      title:"👻 Haunted House",
+      subtitle:"The lights flicker. Something moves in the shadows.",
+      ids:[41,42,92,93,94,198,200,215,228,229,292,302,303,353,354,355,356,425,426,429,442,477,478,487,562,563,570,571,592,593,607,608,609,618,622,623,624,625,629,630,679,680,681,708,709,710,711,720,769,770,778,792,802,854,855,864,867,885,886,887],
+      badge:"Phantom Badge",
+      badgeGoal:20,
+      icon:"👻"
+    },
+    power: {
+      title:"⚡ Power Plant",
+      subtitle:"The generators hum. Electricity crackles in the air.",
+      ids:[25,26,81,82,100,101,125,135,145,172,179,180,181,239,243,309,310,311,312,403,404,405,417,436,437,462,466,479,522,523,587,595,596,599,600,601,602,603,604,642,694,695,702,737,738,777,785,796,835,836,848,849,871,877,880,881,894,921,922,923,938,939,940,941],
+      badge:"Power Badge",
+      badgeGoal:25,
+      icon:"⚡"
+    },
+    dragon: {
+      title:"🐉 Dragon Cave",
+      subtitle:"A deep roar echoes through the cave. This could be rare.",
+      ids:[6,130,142,147,148,149,230,246,247,248,329,330,334,371,372,373,380,381,384,443,444,445,483,484,487,610,611,612,621,633,634,635,643,644,646,696,697,704,705,706,714,715,776,780,782,783,784,799,804,840,841,842,880,881,882,883,884,885,886,887],
+      badge:"Dragon Badge",
+      badgeGoal:30,
+      icon:"🐉"
+    }
+  };
+
+  let state = loadState();
+  let currentArea = null;
+  let currentPokemon = null;
+  let soundOn = true;
+  let busy = false;
+
+  function defaultState(){
+    return {
+      xp:0,
+      caughtTotal:0,
+      shinies:0,
+      dex:{},
+      badges:{},
+      areaCatches:{
+        forest:0,ocean:0,volcano:0,haunted:0,power:0,dragon:0
+      },
+      pokeballs:50,
+      lastLevelRewarded:1,
+      triviaDate:"",
+      triviaBallsToday:0
+    };
+  }
+
+  function loadState(){
+    try{
+      const saved = JSON.parse(localStorage.getItem(SAVE_KEY));
+      const base = defaultState();
+      if(!saved) return base;
+      return {
+        ...base,
+        ...saved,
+        areaCatches:{...base.areaCatches,...(saved.areaCatches || {})},
+        dex:saved.dex || {},
+        badges:saved.badges || {}
+      };
+    }catch(e){
+      return defaultState();
+    }
+  }
+
+
+  function localDateKey(){
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  }
+
+  function resetTriviaDayIfNeeded(){
+    const today = localDateKey();
+    if(state.triviaDate !== today){
+      state.triviaDate = today;
+      state.triviaBallsToday = 0;
+      localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+    }
+  }
+
+  function awardLevelBalls(previousLevel, newLevel){
+    if(newLevel <= previousLevel) return 0;
+    const levelsGained = newLevel - previousLevel;
+    const reward = levelsGained * 5;
+    state.pokeballs += reward;
+    state.lastLevelRewarded = newLevel;
+    return reward;
+  }
+
+  function saveState(){
+    localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+    updateUI();
+
+    if(signedInUser){
+      document.getElementById("syncStatus").textContent = "SYNCING…";
+      clearTimeout(cloudSaveTimer);
+      cloudSaveTimer = setTimeout(saveToCloud, 500);
+    }
+  }
+
+  async function saveToCloud(){
+    if(!signedInUser) return;
+
+    try{
+      await db.collection("players").doc(signedInUser.uid).set({
+        gameState: state,
+        email: signedInUser.email || "",
+        displayName: signedInUser.displayName || "",
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, {merge:true});
+
+      document.getElementById("syncStatus").textContent = "☁️ CLOUD SAVED";
+    }catch(err){
+      console.error("Cloud save failed:", err);
+      document.getElementById("syncStatus").textContent = "⚠️ CLOUD SAVE FAILED";
+    }
+  }
+
+  function normalizeState(saved){
+    const base = defaultState();
+    if(!saved) return base;
+
+    return {
+      ...base,
+      ...saved,
+      areaCatches:{...base.areaCatches,...(saved.areaCatches || {})},
+      dex:saved.dex || {},
+      badges:saved.badges || {}
+    };
+  }
+
+  async function loadCloudOrMigrateLocal(user){
+    const sync = document.getElementById("syncStatus");
+    sync.textContent = "☁️ LOADING CLOUD SAVE…";
+
+    try{
+      const ref = db.collection("players").doc(user.uid);
+      const snap = await ref.get();
+
+      if(snap.exists && snap.data().gameState){
+        state = normalizeState(snap.data().gameState);
+        localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+        updateUI();
+        sync.textContent = "☁️ CLOUD SAVE LOADED";
+      }else{
+        // First login: keep the progress already stored on this device,
+        // then upload it as this account's first cloud save.
+        state = normalizeState(state);
+        await saveToCloud();
+        sync.textContent = "☁️ LOCAL PROGRESS MOVED TO CLOUD";
+      }
+    }catch(err){
+      console.error("Cloud load failed:", err);
+      sync.textContent = "⚠️ USING LOCAL SAVE";
+    }
+  }
+
+  function levelInfo(){
+    const level = Math.floor(state.xp / 100) + 1;
+    const within = state.xp % 100;
+    return {level, within};
+  }
+
+  function updateUI(){
+    const {level,within} = levelInfo();
+    document.getElementById("levelText").textContent = `Level ${level}`;
+    document.getElementById("xpText").textContent = `${within} / 100 XP`;
+    document.getElementById("xpFill").style.width = `${within}%`;
+    document.getElementById("caughtCount").textContent = state.caughtTotal;
+    document.getElementById("dexCount").textContent = `${Object.keys(state.dex).length}/1025`;
+    document.getElementById("badgeCount").textContent = `${Object.keys(state.badges).length}/6`;
+    document.getElementById("shinyCount").textContent = state.shinies;
+    document.getElementById("ballCount").textContent = state.pokeballs;
+    resetTriviaDayIfNeeded();
+    const dailyText = document.getElementById("dailyGuessText");
+    if(dailyText){
+      dailyText.textContent = `Today's trivia rewards: ${state.triviaBallsToday}/15 Poké Balls`;
+    }
+
+    Object.keys(areaData).forEach(area=>{
+      const el = document.getElementById(`badge-${area}`);
+      if(state.badges[area]){
+        el.textContent = "BADGE EARNED";
+      }else{
+        el.textContent = `${state.areaCatches[area] || 0}/${areaData[area].badgeGoal} CAUGHT`;
+      }
+    });
+
+    renderBadges();
+    renderDex();
+  }
+
+  function renderBadges(){
+    const grid = document.getElementById("badgeGrid");
+    grid.innerHTML = "";
+
+    Object.entries(areaData).forEach(([key,a])=>{
+      const div = document.createElement("div");
+      div.className = "badgeCard" + (state.badges[key] ? " earned" : "");
+      div.innerHTML = `
+        <div class="badgeIcon">${a.icon}</div>
+        <div class="badgeName">${a.badge}</div>
+        <div style="font-size:.66rem;color:#6b7280;margin-top:3px">
+          ${state.badges[key] ? "EARNED" : `${state.areaCatches[key] || 0}/${a.badgeGoal}`}
+        </div>
+      `;
+      grid.appendChild(div);
+    });
+  }
+
+  function renderDex(){
+    const grid = document.getElementById("dexGrid");
+    grid.innerHTML = "";
+
+    const entries = Object.values(state.dex).sort((a,b)=>a.id-b.id);
+
+    if(!entries.length){
+      grid.innerHTML = `<div class="emptyDex">No Pokémon caught yet. Start exploring!</div>`;
+      return;
+    }
+
+    entries.forEach(p=>{
+      const div = document.createElement("div");
+      div.className = "dexEntry";
+      div.innerHTML = `
+        <img src="${p.image}" alt="${p.name}">
+        <div class="nm">${p.shiny ? "✨ " : ""}${p.name}</div>
+      `;
+      grid.appendChild(div);
+    });
+  }
+
+  function beep(freq=440, duration=.08){
+    if(!soundOn) return;
+    try{
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if(!AC) return;
+      const ctx = new AC();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "square";
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(.04, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + duration);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + duration);
+    }catch(e){}
+  }
+
+  function rarityRoll(area){
+    const r = Math.random()*100;
+    if(area === "dragon"){
+      if(r < 5) return "LEGENDARY";
+      if(r < 20) return "ULTRA RARE";
+      if(r < 48) return "RARE";
+      return "COMMON";
+    }
+    if(r < 2) return "LEGENDARY";
+    if(r < 10) return "ULTRA RARE";
+    if(r < 32) return "RARE";
+    return "COMMON";
+  }
+
+  function catchChance(rarity){
+    if(rarity === "LEGENDARY") return .35;
+    if(rarity === "ULTRA RARE") return .55;
+    if(rarity === "RARE") return .72;
+    return .88;
+  }
+
+  async function explore(area){
+    if(busy) return;
+    busy = true;
+    currentArea = area;
+
+    const data = areaData[area];
+    document.getElementById("mapPanel").style.display = "none";
+    document.getElementById("encounterPanel").style.display = "block";
+    document.getElementById("areaTitle").textContent = data.title;
+    document.getElementById("areaSubtitle").textContent = data.subtitle;
+
+    document.getElementById("catchBtn").style.display = "block";
+    document.getElementById("runBtn").style.display = "block";
+    document.getElementById("exploreAgainBtn").style.display = "none";
+    document.getElementById("backBtn").style.display = "none";
+    document.getElementById("message").textContent = "Searching for a wild Pokémon...";
+    document.getElementById("loading").style.display = "grid";
+
+    try{
+      // 70% of encounters come from the area's themed pool.
+      // 30% are "world encounters" from the full National Dex.
+      // This makes ALL 1,025 Pokémon collectible in the adventure.
+      let id;
+      const worldEncounter = Math.random() < 0.30;
+
+      if(worldEncounter){
+        id = Math.floor(Math.random() * 1025) + 1;
+      }else{
+        const pool = data.ids;
+        id = pool[Math.floor(Math.random()*pool.length)];
+      }
+
+      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`, {cache:"no-store"});
+      if(!res.ok) throw new Error("API request failed");
+      const p = await res.json();
+
+      const shiny = Math.random() < .02;
+      const artwork = shiny
+        ? p?.sprites?.other?.["official-artwork"]?.front_shiny
+        : p?.sprites?.other?.["official-artwork"]?.front_default;
+
+      const rarity = rarityRoll(area);
+
+      currentPokemon = {
+        id:p.id,
+        name:p.name.replaceAll("-"," "),
+        rarity,
+        shiny,
+        worldEncounter,
+        image:artwork || p.sprites.front_default,
+        types:(p.types || []).map(t=>t.type.name)
+      };
+
+      // 18% chance to find a small Poké Ball drop while exploring.
+      let foundBalls = 0;
+      if(Math.random() < 0.18){
+        foundBalls = Math.floor(Math.random()*3) + 1;
+        state.pokeballs += foundBalls;
+        saveState();
+      }
+
+      showEncounter(currentPokemon);
+      if(foundBalls > 0){
+        document.getElementById("message").textContent =
+          `You found ${foundBalls} Poké Ball${foundBalls === 1 ? "" : "s"} while exploring! A wild ${currentPokemon.name} appeared.`;
+      }
+      beep(420,.08);
+      setTimeout(()=>beep(560,.08),90);
+
+    }catch(e){
+      console.error(e);
+      document.getElementById("message").textContent =
+        "Could not load this encounter. Check your connection and try again.";
+      document.getElementById("catchBtn").style.display = "none";
+      document.getElementById("runBtn").style.display = "none";
+      document.getElementById("exploreAgainBtn").style.display = "block";
+      document.getElementById("backBtn").style.display = "block";
+    }finally{
+      document.getElementById("loading").style.display = "none";
+      busy = false;
+    }
+  }
+
+  function showEncounter(p){
+    document.getElementById("pokemonImage").src = p.image;
+    document.getElementById("pokemonImage").alt = p.name;
+    document.getElementById("pokemonName").textContent =
+      p.shiny ? `✨ ${p.name}` : p.name;
+    document.getElementById("rarity").textContent =
+      p.shiny ? `✨ SHINY • ${p.rarity}` : p.rarity;
+    document.getElementById("encounterTag").textContent =
+      p.shiny
+        ? "✨ SHINY ENCOUNTER"
+        : (p.worldEncounter ? "🌎 WORLD ENCOUNTER" : "WILD ENCOUNTER");
+
+    const types = document.getElementById("types");
+    types.innerHTML = "";
+    p.types.forEach(t=>{
+      const span = document.createElement("span");
+      span.className = "type";
+      span.textContent = t;
+      types.appendChild(span);
+    });
+
+    document.getElementById("message").textContent =
+      `A wild ${p.name} appeared. Try to catch it!`;
+  }
+
+  async function attemptCatch(){
+    if(busy || !currentPokemon) return;
+
+    const msg = document.getElementById("message");
+
+    if(state.pokeballs <= 0){
+      msg.textContent = "You're out of Poké Balls! Play Guess That Pokémon or keep exploring to find more.";
+      return;
+    }
+
+    busy = true;
+    state.pokeballs -= 1;
+    saveState();
+
+    const catchBtn = document.getElementById("catchBtn");
+    const runBtn = document.getElementById("runBtn");
+    catchBtn.disabled = true;
+    runBtn.disabled = true;
+
+    msg.textContent = "You threw the ball...";
+    beep(620,.08);
+    await wait(500);
+
+    msg.textContent = "1...";
+    beep(480,.06);
+    await wait(450);
+
+    msg.textContent = "2...";
+    beep(520,.06);
+    await wait(450);
+
+    msg.textContent = "3...";
+    beep(560,.06);
+    await wait(500);
+
+    const caught = Math.random() < catchChance(currentPokemon.rarity);
+
+    if(caught){
+      state.caughtTotal += 1;
+      state.areaCatches[currentArea] = (state.areaCatches[currentArea] || 0) + 1;
+
+      if(currentPokemon.shiny) state.shinies += 1;
+
+      if(!state.dex[currentPokemon.id]){
+        state.dex[currentPokemon.id] = {
+          id:currentPokemon.id,
+          name:currentPokemon.name,
+          image:currentPokemon.image,
+          shiny:currentPokemon.shiny
+        };
+      }else if(currentPokemon.shiny){
+        state.dex[currentPokemon.id].shiny = true;
+        state.dex[currentPokemon.id].image = currentPokemon.image;
+      }
+
+      const xpGain =
+        currentPokemon.rarity === "LEGENDARY" ? 40 :
+        currentPokemon.rarity === "ULTRA RARE" ? 25 :
+        currentPokemon.rarity === "RARE" ? 15 : 10;
+
+      const previousLevel = Math.floor(state.xp / 100) + 1;
+      state.xp += xpGain;
+
+      let badgeEarned = false;
+      const badgeGoal = areaData[currentArea].badgeGoal;
+      if((state.areaCatches[currentArea] || 0) >= badgeGoal && !state.badges[currentArea]){
+        state.badges[currentArea] = true;
+        state.xp += 50;
+        badgeEarned = true;
+      }
+
+      const newLevel = Math.floor(state.xp / 100) + 1;
+      const levelBallReward = awardLevelBalls(previousLevel, newLevel);
+
+      saveState();
+
+      const burst = document.getElementById("burst");
+      burst.style.display = "grid";
+      setTimeout(()=>burst.style.display="none",800);
+
+      beep(680,.1);
+      setTimeout(()=>beep(820,.1),100);
+      setTimeout(()=>beep(980,.18),210);
+
+      const levelBonusText = levelBallReward > 0
+        ? ` Level up bonus: +${levelBallReward} Poké Balls!`
+        : "";
+
+      msg.textContent = badgeEarned
+        ? `Caught ${currentPokemon.name}! +${xpGain} XP. You completed the ${areaData[currentArea].badgeGoal}-catch challenge and earned the ${areaData[currentArea].badge}!${levelBonusText}`
+        : `Caught ${currentPokemon.name}! +${xpGain} XP. Badge progress: ${state.areaCatches[currentArea]}/${areaData[currentArea].badgeGoal}.${levelBonusText}`;
+
+    }else{
+      msg.textContent = `${currentPokemon.name} broke free!`;
+      beep(220,.16);
+    }
+
+    catchBtn.style.display = "none";
+    runBtn.style.display = "none";
+    document.getElementById("exploreAgainBtn").style.display = "block";
+    document.getElementById("backBtn").style.display = "block";
+
+    catchBtn.disabled = false;
+    runBtn.disabled = false;
+    busy = false;
+  }
+
+  function wait(ms){
+    return new Promise(resolve=>setTimeout(resolve,ms));
+  }
+
+  function returnToMap(){
+    document.getElementById("encounterPanel").style.display = "none";
+    document.getElementById("mapPanel").style.display = "block";
+    currentPokemon = null;
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+
+  let guessAnswer = null;
+  let guessBusy = false;
+
+  async function startGuessChallenge(){
+    if(guessBusy) return;
+    resetTriviaDayIfNeeded();
+
+    const status = document.getElementById("guessStatus");
+    const choices = document.getElementById("guessChoices");
+    const image = document.getElementById("guessImage");
+    const loading = document.getElementById("guessLoading");
+
+    if(state.triviaBallsToday >= 150){
+      status.textContent = "You've earned today's maximum of 150 Poké Balls from trivia. Come back tomorrow!";
+      choices.innerHTML = "";
+      return;
+    }
+
+    guessBusy = true;
+    loading.style.display = "grid";
+    choices.innerHTML = "";
+    image.style.filter = "brightness(0)";
+    status.textContent = "Who's that Pokémon?";
+
+    try{
+      const ids = new Set();
+      while(ids.size < 4){
+        ids.add(Math.floor(Math.random()*1025)+1);
+      }
+
+      const data = await Promise.all([...ids].map(async id=>{
+        const r = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`, {cache:"no-store"});
+        if(!r.ok) throw new Error("Trivia fetch failed");
+        const p = await r.json();
+        return {
+          id:p.id,
+          name:p.name.replaceAll("-"," "),
+          image:p?.sprites?.other?.["official-artwork"]?.front_default || p.sprites.front_default
+        };
+      }));
+
+      guessAnswer = data[Math.floor(Math.random()*data.length)];
+      image.src = guessAnswer.image;
+      image.alt = "Mystery Pokémon silhouette";
+
+      const shuffled = data.slice().sort(()=>Math.random()-.5);
+      shuffled.forEach(option=>{
+        const btn = document.createElement("button");
+        btn.className = "action";
+        btn.style.background = "#e5e7eb";
+        btn.style.color = "#111827";
+        btn.textContent = option.name.toUpperCase();
+        btn.addEventListener("click", ()=>answerGuess(option.id));
+        choices.appendChild(btn);
+      });
+
+      document.getElementById("startGuessBtn").style.display = "none";
+    }catch(e){
+      console.error(e);
+      status.textContent = "Couldn't load the challenge. Check your connection and try again.";
+      document.getElementById("startGuessBtn").style.display = "block";
+    }finally{
+      loading.style.display = "none";
+      guessBusy = false;
+    }
+  }
+
+  function answerGuess(id){
+    if(!guessAnswer) return;
+    resetTriviaDayIfNeeded();
+
+    const status = document.getElementById("guessStatus");
+    const image = document.getElementById("guessImage");
+    const choices = document.getElementById("guessChoices");
+    image.style.filter = "none";
+
+    if(id === guessAnswer.id){
+      const remaining = 150 - state.triviaBallsToday;
+      const reward = Math.min(5, remaining);
+
+      if(reward > 0){
+        state.pokeballs += reward;
+        state.triviaBallsToday += reward;
+        saveState();
+        status.textContent = `Correct! It's ${guessAnswer.name}! +${reward} Poké Balls.`;
+        beep(700,.08);
+        setTimeout(()=>beep(900,.12),100);
+      }else{
+        status.textContent = `Correct! It's ${guessAnswer.name}, but you've reached today's 150-ball trivia limit.`;
+      }
+    }else{
+      status.textContent = `Not quite. It was ${guessAnswer.name}. No Poké Balls earned this round.`;
+      beep(220,.14);
+    }
+
+    choices.innerHTML = "";
+    guessAnswer = null;
+
+    const start = document.getElementById("startGuessBtn");
+    start.style.display = "block";
+    start.textContent = state.triviaBallsToday >= 150
+      ? "⏳ DAILY LIMIT REACHED"
+      : "🧠 NEXT CHALLENGE";
+  }
+
+
+  function friendlyAuthError(err){
+    const code = err?.code || "";
+    if(code.includes("invalid-credential")) return "Email or password wasn't recognized.";
+    if(code.includes("email-already-in-use")) return "That email already has an account. Try Sign In.";
+    if(code.includes("weak-password")) return "Choose a password with at least 6 characters.";
+    if(code.includes("invalid-email")) return "Enter a valid email address.";
+    if(code.includes("popup-closed")) return "Google sign-in was closed before finishing.";
+    return err?.message || "Sign-in didn't work. Try again.";
+  }
+
+  async function googleSignIn(){
+    try{
+      const provider = new firebase.auth.GoogleAuthProvider();
+      await auth.signInWithPopup(provider);
+    }catch(err){
+      alert(friendlyAuthError(err));
+    }
+  }
+
+  async function emailSignIn(){
+    const email = document.getElementById("authEmail").value.trim();
+    const password = document.getElementById("authPassword").value;
+
+    if(!email || !password){
+      alert("Enter your email and password first.");
+      return;
+    }
+
+    try{
+      await auth.signInWithEmailAndPassword(email,password);
+    }catch(err){
+      alert(friendlyAuthError(err));
+    }
+  }
+
+  async function createAccount(){
+    const email = document.getElementById("authEmail").value.trim();
+    const password = document.getElementById("authPassword").value;
+
+    if(!email || !password){
+      alert("Enter an email and password first.");
+      return;
+    }
+
+    try{
+      await auth.createUserWithEmailAndPassword(email,password);
+    }catch(err){
+      alert(friendlyAuthError(err));
+    }
+  }
+
+  async function signOutPlayer(){
+    // Force one last cloud save before signing out.
+    if(signedInUser){
+      await saveToCloud();
+    }
+    await auth.signOut();
+  }
+
+  auth.onAuthStateChanged(async user=>{
+    authResolved = true;
+    signedInUser = user;
+
+    const status = document.getElementById("accountStatus");
+    const sync = document.getElementById("syncStatus");
+    const signedOutControls = document.getElementById("signedOutControls");
+    const signOutBtn = document.getElementById("signOutBtn");
+
+    if(user){
+      const name = user.displayName || user.email || "Trainer";
+      status.textContent = `Signed in as ${name}. Your progress now follows this account.`;
+      signedOutControls.style.display = "none";
+      signOutBtn.style.display = "block";
+      await loadCloudOrMigrateLocal(user);
+    }else{
+      status.textContent = "Not signed in. Progress is currently saved only on this device.";
+      signedOutControls.style.display = "block";
+      signOutBtn.style.display = "none";
+      sync.textContent = "LOCAL SAVE";
+    }
+  });
+
+  document.getElementById("googleSignInBtn").addEventListener("click", googleSignIn);
+  document.getElementById("emailSignInBtn").addEventListener("click", emailSignIn);
+  document.getElementById("createAccountBtn").addEventListener("click", createAccount);
+  document.getElementById("signOutBtn").addEventListener("click", signOutPlayer);
+
+  document.querySelectorAll(".area").forEach(btn=>{
+    btn.addEventListener("click", ()=> explore(btn.dataset.area));
+  });
+
+  document.getElementById("catchBtn").addEventListener("click", attemptCatch);
+
+  document.getElementById("runBtn").addEventListener("click", ()=>{
+    document.getElementById("message").textContent = "You got away safely.";
+    document.getElementById("catchBtn").style.display = "none";
+    document.getElementById("runBtn").style.display = "none";
+    document.getElementById("exploreAgainBtn").style.display = "block";
+    document.getElementById("backBtn").style.display = "block";
+  });
+
+  document.getElementById("exploreAgainBtn").addEventListener("click", ()=>{
+    explore(currentArea);
+  });
+
+  document.getElementById("backBtn").addEventListener("click", returnToMap);
+
+  document.getElementById("startGuessBtn").addEventListener("click", startGuessChallenge);
+
+  document.getElementById("soundBtn").addEventListener("click", e=>{
+    soundOn = !soundOn;
+    e.target.textContent = soundOn ? "🔊 Sound: ON" : "🔇 Sound: OFF";
+    if(soundOn) beep(620,.08);
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", ()=>{
+    const ok = confirm("Reset all Trainer Adventure progress on this device?");
+    if(!ok) return;
+    localStorage.removeItem(SAVE_KEY);
+    state = defaultState();
+    saveState();
+    returnToMap();
+  });
+
+  // NFC deep links:
+  // ?area=forest
+  // ?area=ocean
+  // ?area=volcano
+  // ?area=haunted
+  // ?area=power
+  // ?area=dragon
+  function checkDeepLink(){
+    const params = new URLSearchParams(window.location.search);
+    const area = params.get("area");
+    if(area && areaData[area]){
+      setTimeout(()=>explore(area),250);
+    }
+  }
+
+  updateUI();
+  checkDeepLink();
+</script>
+</body>
+</html>
